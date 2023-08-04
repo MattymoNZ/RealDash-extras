@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- RealDash CAN XML description file, version 2 Requires RealDash version 1.5.8 or newer -->
+<!-- EMtron Scaling:
+https://help.emtronaustralia.com.au/emtune/ParameterScaling1.html
+Position  		V*0.1-100
+Pressure  		V*0.1
+Temperature 	V*0.1-50
+Lambda			V*0.001
+Speed			V*0.1
+Ign Angle		V*0.1-100
+Voltage			V*.001
+Percentage1		V*0.1
+Percentage2		V*0.1-100
+Rate of Change1	V*0.1-100
+Rate of Change2	V-20000 	*Conflicting definitions in Emtron Help, using value that equates true for example data given
+G-Force			V*0.01-10
+RPM				V
+Pressure Diff	V*0.1-1000
+Counter			V
+VVT Position	V*0.1-200 -->
+<!-- Emtron Data
+https://help.emtronaustralia.com.au/emtune/PredefinedCANTransmitPacket2.html-->
+<!-- Frame 1 (ID 0)
+Engine Speed					(RPM)
+Engine Manifold Pressure		(Pressure)
+Engine Temperature				(Temperature)
+Engine Inlet Temperature		(Temperature)-->
+
+<!-- Frame 2 (ID 1)
+Throttle Position 1				(Position)
+Estimated Charge Temperature	(Temperature)
+Gear							(Counter)
+Battery Volts					(Voltage)-->
+
+<!-- Frame 3 (ID 2)
+Oil Pressure					(Pressure)
+Oil Temperature					(Temperature)
+Fuel Pressure					(Pressure)
+Fuel Temperature				(Temperature)-->
+
+<!-- Frame 4 (ID 3)
+Exhaust Pressure				(Pressure)
+Fuel Pressure Differential		(Pressure Diff)
+Crankcase Pressure				(Pressure)
+Coolant Pressure				(Pressure)-->
+
+<!-- Frame 5 (ID 4)
+Lambda 1						(La)
+Lambda 1 (2?)					(La)
+Lambda Target					(La)
+Drive Speed						(Speed)-->
+
+<!-- Frame 6 (ID 5)
+Lambda 1 Short					(Percentage2)
+Lambda 2 Short					(Percentage2)
+Lambda 2 (1?) Long				(Percentage2)
+Lambda 2 Long					(Percentage2)-->
+
+<!-- Frame 7 (ID 6)
+Injector Duty Cycle				(Percentage1)
+Ignition Angle					(Ign Angle)
+Baro							(Pressure)
+ECU Temperature					(Temperature)-->
+
+<!-- Frame 8 (ID 7)
+dTPS							(Rate of Change1)
+dRPM							(Rate of Change2)
+Fuel Cut Level					(Percentage1)
+Ignition Cut Level				(Percentage1)-->
+
+<!-- Frame 9 (ID 8)
+Ethanol Content					(Percentage1)
+G-Force Lat						(G-Force)
+G-Force Long					(G-Force)
+G-Force Vert					(G-Force)-->
+
+<!-- Frame 10 (ID 9)
+Crank/Cam Error Counter			(Counter)
+Max Engine Speed				(RPM)
+Sync Position					(Percentage1)
+DTC Count						(Counter)-->
+
+<RealDashCAN version="2">
+  <frames baseId="1004">
+    <frame id="0" endianess="little">
+      <value targetId="37" offset="0" length="2"></value> <!-- RPM -->
+      <value targetId="31" offset="2" length="2" conversion="V*0.1"></value> <!-- MAP -->
+      <value targetId="14" offset="4" length="2" conversion="V*0.1-50"></value> <!-- CLT -->
+      <value targetId="27" offset="6" length="2" conversion="V*0.1-50"></value> <!-- IAT -->
+    </frame>
+
+    <frame id="1" endianess="little">
+      <value targetId="42" offset="0" length="2" conversion="V*0.1-100"></value> <!-- TPS -->
+      <value name="EMTron: Estimated Charge Temperature" offset="2" length="2" conversion="V*0.1-50"></value>
+      <value targetId="139" offset="4" length="2"></value> <!-- Gear -->
+      <value targetId="12" offset="6" length="2" conversion="V*.001"></value> <!-- Battery Volts -->
+    </frame>
+    
+    <frame id="2" endianess="little">
+      <value targetId="151" offset="0" length="2" conversion="V*0.1"></value> <!-- Oil Press -->
+      <value targetId="152" offset="2" length="2" conversion="V*0.1-50"></value> <!-- Oil Temp -->
+      <value targetId="202" offset="4" length="2" conversion="V*0.1"></value> <!-- Fuel Press -->
+      <value name="EMTron: Fuel Temp" offset="6" length="2" conversion="V*0.1-50"></value> <!-- Fuel Temp -->
+    </frame>
+	
+	<frame id="3" endianess="little">
+      <value name="EMTron: Exhaust Pressure" offset="0" length="2" conversion="V*0.1"></value> <!-- Exhaust Pressure -->
+      <value name="EMTron: Fuel Pressure Differential" offset="2" length="2" conversion="V*0.1-1000"></value> <!-- Fuel Pressure Differential -->
+      <value name="EMTron: Crankcase Pressure" offset="4" length="2" conversion="V*0.1"></value> <!-- Crankcase Pressure -->
+      <value name="EMTron: Coolant Pressure" offset="6" length="2" conversion="V*0.1"></value> <!-- Coolant Pressure -->
+    </frame>
+	
+	<frame id="4" endianess="little">
+      <value targetId="254" offset="0" length="2" conversion="V*0.001"></value> <!-- Lambda 1 -->
+      <value targetId="255" offset="2" length="2" conversion="V*0.001"></value> <!-- Lambda 1 -->
+      <value targetId="2" offset="4" length="2" conversion="V*0.001"></value> <!-- Lambda Target -->
+      <value name="EMTron: Drive Speed" offset="6" length="2" conversion="V*0.1"></value> <!-- Drive Speed -->
+    </frame> 	
+	
+	<frame id="5" endianess="little">
+      <value name="EMTron: Lambda 1 Short" offset="0" length="2" conversion="V*0.1-100"></value> <!-- Lambda 1 Short -->
+      <value name="EMTron: Lambda 2 Short" offset="2" length="2" conversion="V*0.1-100"></value> <!-- Lambda 2 Short -->
+      <value name="EMTron: Lambda 1? Long" offset="4" length="2" conversion="V*0.1-100"></value> <!-- Lambda 2 (1?) Long -->
+      <value name="EMTron: Lambda 2 Long" offset="6" length="2" conversion="V*0.1-100"></value> <!-- Lambda 2 Long -->
+    </frame> 
+ 
+	<frame id="6" endianess="little">
+      <value name="EMTron: Injector Duty Cycle" offset="0" length="2" conversion="V*0.1"></value> <!-- Injector Duty Cycle -->
+      <value name="EMTron: Ignition Angle" offset="2" length="2" conversion="V*0.1-100"></value> <!-- Ignition Angle -->
+      <value targetId="11" offset="4" length="2" conversion="V*0.1"></value> <!-- Baro -->
+      <value name="EMTron: ECU Temperature" offset="6" length="2" conversion="V*0.1-50"></value> <!-- ECU Temperature -->
+    </frame>
+	
+	<frame id="7" endianess="little">
+      <value name="EMTron: dTPS" offset="0" length="2" conversion="V*0.1-100"></value> <!-- dTPS -->
+      <value name="EMTron: dRPM" offset="2" length="2" conversion="V-20000"></value> <!-- dRPM -->
+      <value name="EMTron: Fuel Cut Level" offset="4" length="2" conversion="V*0.1"></value> <!-- Fuel Cut Level -->
+      <value name="EMTron: Ignition Cut Level" offset="6" length="2" conversion="V*0.1"></value> <!-- Ignition Cut Level -->
+    </frame>
+	
+	<frame id="8" endianess="little">
+      <value name="EMTron: Ethanol Content" offset="0" length="2" conversion="V*0.1"></value> <!-- Ethanol Content -->
+      <value name="EMTron: G-Force Lat" offset="2" length="2" conversion="V*0.01-10"></value> <!-- G-Force Lat -->
+      <value name="EMTron: G-Force Long" offset="4" length="2" conversion="V*0.01-10"></value> <!-- G-Force Long -->
+      <value name="EMTron: G-Force Vert" offset="6" length="2" conversion="V*0.01-10"></value> <!-- G-Force Vert -->
+    </frame>
+	
+	<frame id="9" endianess="little">
+      <value name="EMTron: Crank/Cam Error" offset="0" length="2"></value> <!-- Crank/Cam Error Counter -->
+      <value name="EMTron: Max Engine Speed" offset="2" length="2"></value> <!-- Max Engine Speed -->
+      <value name="EMTron: Sync Position" offset="4" length="2" conversion="V*0.1"></value> <!-- Sync Position -->
+      <value targetId="66" offset="6" length="2"></value> <!-- DTC Count -->
+    </frame>
+  </frames>
+</RealDashCAN>
+
